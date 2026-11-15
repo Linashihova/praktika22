@@ -5,5 +5,6 @@ namespace Shop_Shihova.Data.Interfaces
     public interface IItems
     {
         public IEnumerable<Items> AllItems { get; }
+        public int Add(Items Item);
     }
 }
