@@ -106,5 +106,20 @@ namespace Shop_Shihova.Controllers
             }
             return Json(Program.BasketItem);
         }
+        public ActionResult BasketCount(int idItem = -1, int count = -1)
+        {
+            if (idItem != -1)
+            {
+                if (count == 0)
+                {
+                    Program.BasketItem.Remove(Program.BasketItem.Find(x => x.Id == idItem));
+                }
+                else
+                {
+                    Program.BasketItem.Find(x => x.Id == idItem).Count = count;
+                }
+            }
+            return Json(Program.BasketItem);
+        }
     }
 }
