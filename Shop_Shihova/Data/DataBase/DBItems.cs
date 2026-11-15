@@ -31,5 +31,34 @@ namespace Shop_Shihova.Data.DataBase
                 return items;
             }
         }
+        public int Add(Items Item)
+        {
+            MySqlConnection connection = Connection.OpenConnection();
+            Connection.Query($"INSERT INTO `Items` (`Name`, `Description`, `Img`, `Price`, `IdCategory`) VALUES ('{Item.Name}', '{Item.Description}', '{Item.Img}', {Item.Price}, {Item.Category.Id});", connection);
+            Connection.CloseConnection(connection);
+
+            int IdItem = -1;
+            connection = Connection.OpenConnection();
+            MySqlDataReader data = Connection.Query($"SELECT `Id` FROM `Items` WHERE `Name` = '{Item.Name}' AND `Description` = '{Item.Description}' AND `Price` = {Item.Price} AND `IdCategory` = {Item.Category.Id};", connection);
+            if (data.HasRows)
+            {
+                data.Read();
+                IdItem = data.GetInt32(0);
+            }
+            Connection.CloseConnection(connection);
+            return IdItem;
+        }
+        public void Update(Items Item)
+        {
+            MySqlConnection connection = Connection.OpenConnection();
+            Connection.Query($"UPDATE `Items` SET `Name` = '{Item.Name}', `Description` = '{Item.Description}', `Img` = '{Item.Img}', `Price` = {Item.Price}, `IdCategory` = {Item.Category.Id} WHERE `Id` = {Item.Id};", connection);
+            Connection.CloseConnection(connection);
+        }
+        public void Delete(int Id)
+        {
+            MySqlConnection connection = Connection.OpenConnection();
+            Connection.Query($"DELETE FROM `Items` WHERE `Id` = {Id};", connection);
+            Connection.CloseConnection(connection);
+        }
     }
 }

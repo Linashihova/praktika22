@@ -41,6 +41,10 @@
                     <div>Цена: @item.Price.ToString("c")</div>
                     <div>Категория: @item.Category.Name</div>
                     <div>Описание: @item.Description</div>
+                    <div>
+                        <a href="/Items/Update?id=@item.Id">Изменить</a>
+                        <a href="/Items/Delete?id=@item.Id" onclick="return confirm('Удалить предмет?')">Удалить</a>
+                    </div>
                 </div>
             </div>
         }

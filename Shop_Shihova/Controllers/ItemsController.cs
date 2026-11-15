@@ -56,5 +56,47 @@ namespace Shop_Shihova.Controllers
 
             return Redirect("/Items/Update?id=" + id);
         }
+        [HttpGet]
+        public ViewResult Update(int id)
+        {
+            ViewBag.Title = "Изменение предмета";
+            ViewBag.Categorys = IAllCategorys.AllCategorys;
+
+            Items Item = IAllItems.AllItems.Where(x => x.Id == id).First();
+
+            return View(Item);
+        }
+        [HttpPost]
+        public RedirectResult Update(int id, string name, string description, IFormFile files, float price, int idCategory)
+        {
+            Items Item = IAllItems.AllItems.Where(x => x.Id == id).First();
+
+            if (files != null)
+            {
+                var uploads = Path.Combine(hostingEnvironment.WebRootPath, "img");
+                var filePath = Path.Combine(uploads, files.FileName);
+                using (var stream = new FileStream(filePath, FileMode.Create))
+                {
+                    files.CopyTo(stream);
+                }
+                Item.Img = "/img/" + Path.GetFileName(files.FileName);
+            }
+
+            Item.Name = name;
+            Item.Description = description;
+            Item.Price = Convert.ToInt32(price);
+            Item.Category = new Categorys() { Id = idCategory };
+
+            IAllItems.Update(Item);
+
+            return Redirect("/Items/Update?id=" + id);
+        }
+        [HttpGet]
+        public RedirectResult Delete(int id)
+        {
+            IAllItems.Delete(id);
+
+            return Redirect("/Items/List");
+        }
     }
 }

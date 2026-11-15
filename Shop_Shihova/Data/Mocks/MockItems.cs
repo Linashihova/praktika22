@@ -47,5 +47,20 @@ namespace Shop_Shihova.Data.Mocks
                 };
             }
         }
+
+        public int Add(Items Item)
+        {
+            throw new NotImplementedException();
+        }
+
+        public void Update(Items Item)
+        {
+            throw new NotImplementedException();
+        }
+
+        public void Delete(int Id)
+        {
+            throw new NotImplementedException();
+        }
     }
 }

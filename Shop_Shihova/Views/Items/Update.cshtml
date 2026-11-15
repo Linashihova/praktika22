@@ -1,0 +1,45 @@
+@using Shop_Shihova.Data.Models
+@model Items
+@{
+    Layout = "_Layout";
+}
+<form method="post" enctype="multipart/form-data">
+    <input name="id" type="hidden" value="@Model.Id" />
+    <div>
+        Наименование:
+        <br /><input name="name" placeholder="Наименование:" value="@Model.Name" />
+    </div>
+    <div>
+        Описание:
+        <br /><input name="description" placeholder="Описание:" value="@Model.Description" />
+    </div>
+    <div>
+        <label for="file">Изображение:</label>
+        <br /><img src="@Model.Img" />
+        <br /><input name="files" type="file" />
+    </div>
+    <div>
+        Стоимость:
+        <br /><input name="price" value="@Model.Price" />
+    </div>
+    <div>
+        Категория:
+        <br /><select name="idCategory">
+        @{
+            foreach (Categorys Category in ViewBag.Categorys)
+            {
+                if (Model.Category != null && Category.Id == Model.Category.Id)
+                {
+                    <option selected="selected" value="@Category.Id">@Category.Name</option>
+                }
+                else
+                {
+                    <option value="@Category.Id">@Category.Name</option>
+                }
+            }
+        }
+    </select>
+</div>
+<input type="submit" value="Сохранить" />
+<a class="delete" href="/Items/Delete?id=@Model.Id" onclick="return confirm('Удалить предмет?')">Удалить</a>
+</form>
