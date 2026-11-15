@@ -1,5 +1,6 @@
 ﻿using Microsoft.AspNetCore.Mvc;
 using Shop_Shihova.Data.Interfaces;
+using Shop_Shihova.Data.Models;
 using Shop_Shihova.Data.ViewModell;
 
 namespace Shop_Shihova.Controllers
@@ -24,6 +25,13 @@ namespace Shop_Shihova.Controllers
             VMItems.Categorys = IAllCategorys.AllCategorys;
             VMItems.SelectCategory = id;
             return View(VMItems);
+        }
+        [HttpGet]
+        public ViewResult Add()
+        {
+            IEnumerable<Categorys> Categorys = IAllCategorys.AllCategorys;
+
+            return View(Categorys);
         }
     }
 }
